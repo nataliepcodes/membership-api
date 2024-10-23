@@ -20,7 +20,7 @@ def edit_member(member_id):
 
 @app.route('/member/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
-    return '<h1>This route removes member ID</h1>'
+    return '<h1>This route removes member by ID</h1>'
 
 if __name__ == '__main__':
     app.run(debug=True)
