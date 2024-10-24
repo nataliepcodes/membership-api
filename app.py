@@ -1,4 +1,12 @@
 from flask import Flask, g
+from database import get_db
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+database = os.getenv('DATABASE')
 
 app = Flask(__name__)
 
