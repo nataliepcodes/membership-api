@@ -2,3 +2,8 @@ For Postman testing:
 1. POST 
 2. go to Body, select raw
 3. go to Text, select JSON
+{
+    "name" : "Alice",
+    "email" : "alice@whatever.com",
+    "level" : "Gold"
+}
