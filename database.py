@@ -1,5 +1,11 @@
 from flask import g 
 import sqlite3
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+database = os.getenv('DATABASE')
 
 def connect_db():
     sql = sqlite3.connect('')
