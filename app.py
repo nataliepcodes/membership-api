@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, request
 from database import get_db
 
 import os
@@ -25,7 +25,13 @@ def get_member(member_id):
 
 @app.route('/member', methods=['POST'])
 def add_member():
-    return '<h1>This route adds a new member</h1>'
+    new_member_info = request.get_json()
+    name = new_member_info['name']
+    email = new_member_info['email']
+    level = new_member_info['level']
+
+    # test for Postman return: <h1>The name is Alice, the email is alice@whatever.com, and the level is Gold</h1>
+    return '<h1>The name is {}, the email is {}, and the level is {}</h1>'.format(name, email, level)
 
 @app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])
 def edit_member(member_id):
