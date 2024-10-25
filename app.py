@@ -1,12 +1,6 @@
 from flask import Flask, g, request
 from database import get_db
-
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-database = os.getenv('DATABASE')
 
 app = Flask(__name__)
 
@@ -28,7 +22,7 @@ def get_member(member_id):
 
 @app.route('/member', methods=['POST'])
 def add_member():
-    
+
     new_member_info = request.get_json()
     name = new_member_info['name']
     email = new_member_info['email']

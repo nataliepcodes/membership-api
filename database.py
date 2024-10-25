@@ -6,9 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 database = os.getenv('DATABASE')
+# print(f"Database path: {database}")
 
 def connect_db():
-    sql = sqlite3.connect('')
+    sql = sqlite3.connect(database)
     sql.row_factory = sqlite3.Row
     return sql
 
