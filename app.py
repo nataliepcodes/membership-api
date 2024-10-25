@@ -1,4 +1,4 @@
-from flask import Flask, g, request
+from flask import Flask, g, request, jsonify
 from database import get_db
 import os
 
@@ -22,19 +22,26 @@ def get_member(member_id):
 
 @app.route('/member', methods=['POST'])
 def add_member():
-
     new_member_info = request.get_json()
+
     name = new_member_info['name']
     email = new_member_info['email']
     level = new_member_info['level']
 
+    # Adding data to db
     db = get_db()
     db.execute('INSERT INTO members (name, email, level) VALUES (?, ?, ?)', [name, email, level])
     db.commit()
 
-    # test for Postman return: <h1>The name is Alice, the email is alice@whatever.com, and the level is Gold</h1>
-    return '<h1>The name is {}, the email is {}, and the level is {}</h1>'.format(name, email, level)
+    # Querying data from db
+    member_cur = db.execute('SELECT id, name, email, level WHERE name = ?', [name])
+    new_member = member_cur.fetchone()
 
+    # test for Postman return: <h1>The name is Alice, the email is alice@whatever.com, and the level is Gold</h1>
+    # return '<h1>The name is {}, the email is {}, and the level is {}</h1>'.format(name, email, level)
+    
+    # Building a json object
+    return jsonify({'id' : new_member['id'], 'name' : new_member['name'], 'email' : new_member['email'], 'level' : new_member['level']})
 
 # TODO 
 @app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])
