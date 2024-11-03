@@ -15,9 +15,22 @@ def close_db(error):
 def get_members():
     db = get_db()
     member_cur = db.execute('SELECT * FROM members')
-    all_members = member_cur.fetchall()
+    all_members = member_cur.fetchall() # returns list of tuples
 
-    return render_template('index.html', members=all_members)
+    # Initialising and empty list to store a list of dictionaries, one dictionary for each member
+    member_values = []
+
+    # Build dictionary, array of objects once converted to json
+    for member in all_members:
+        dictionary = {}
+        dictionary['id'] = member['id']
+        dictionary['name'] = member['name']
+        dictionary['email'] = member['email']
+        dictionary['level'] = member['level']
+
+        member_values.append(dictionary)
+
+    return jsonify({'members' : member_values}) # returns json object
 
 # TODO 
 @app.route('/member/<int:member_id>', methods=['GET'])
