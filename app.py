@@ -1,4 +1,4 @@
-from flask import Flask, g, request, jsonify
+from flask import Flask, g, request, jsonify, render_template
 from database import get_db
 import os
 
@@ -10,16 +10,21 @@ def close_db(error):
         g.sqlite_db.close()
 
 # TODO 
+# Returns all members from the database including their information
 @app.route('/member', methods=['GET'])
 def get_members():
-    return '<h1>This route returns all the members</h1>'
+    db = get_db()
+    member_cur = db.execute('SELECT * FROM members')
+    all_members = member_cur.fetchall()
+
+    return render_template('index.html', members=all_members)
 
 # TODO 
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
     return '<h1>This route returns one member</h1>'
 
-
+# Adds member to the database
 @app.route('/member', methods=['POST'])
 def add_member():
     new_member_info = request.get_json() # gets data from Postman
