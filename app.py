@@ -22,7 +22,7 @@ def get_member(member_id):
 
 @app.route('/member', methods=['POST'])
 def add_member():
-    new_member_info = request.get_json()
+    new_member_info = request.get_json() # gets data from Postman
 
     name = new_member_info['name']
     email = new_member_info['email']
