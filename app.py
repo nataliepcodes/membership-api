@@ -15,7 +15,7 @@ def close_db(error):
 def get_members():
     db = get_db()
     member_cur = db.execute('SELECT * FROM members')
-    all_members = member_cur.fetchall() # returns list of tuples
+    all_members = member_cur.fetchall()  # returns list of tuples
 
     # Initialising and empty list to store a list of dictionaries, one dictionary for each member
     member_values = []
@@ -30,15 +30,20 @@ def get_members():
 
         member_values.append(dictionary)
 
-    return jsonify({'members' : member_values}) # returns json object
+    # Return: json object, list of dictionaries
+    return jsonify({'members' : member_values}) 
 
 
+# Returns one member by id
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
+
+    # Process: get one member information from db by member id
     db = get_db()
     member_cur = db.execute('SELECT id, name, email, level FROM members WHERE id = ?', [member_id])
     member = member_cur.fetchone()
 
+    # Return: json object, list of dictionaries
     return jsonify({'member' : {'id' : member['id'], 'name' : member['name'], 'email' : member['email'], 'level' : member['level']}})
 
 
@@ -59,11 +64,8 @@ def add_member():
     # Querying data from db
     member_cur = db.execute('SELECT id, name, email, level WHERE name = ?', [name])
     new_member = member_cur.fetchone()
-
-    # test for Postman return: <h1>The name is Alice, the email is alice@whatever.com, and the level is Gold</h1>
-    # return '<h1>The name is {}, the email is {}, and the level is {}</h1>'.format(name, email, level)
     
-    # Building a json object
+    # Return: json object, list of dictionaries
     return jsonify({'member' : {'id' : new_member['id'], 'name' : new_member['name'], 'email' : new_member['email'], 'level' : new_member['level']}})
 
 
