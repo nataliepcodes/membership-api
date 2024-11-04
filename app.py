@@ -9,7 +9,7 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
-# TODO 
+
 # Returns all members from the database including their information
 @app.route('/member', methods=['GET'])
 def get_members():
@@ -32,10 +32,12 @@ def get_members():
 
     return jsonify({'members' : member_values}) # returns json object
 
+
 # TODO 
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
     return '<h1>This route returns one member</h1>'
+
 
 # Adds member to the database
 @app.route('/member', methods=['POST'])
@@ -59,7 +61,7 @@ def add_member():
     # return '<h1>The name is {}, the email is {}, and the level is {}</h1>'.format(name, email, level)
     
     # Building a json object
-    return jsonify({'id' : new_member['id'], 'name' : new_member['name'], 'email' : new_member['email'], 'level' : new_member['level']})
+    return jsonify({'member' : {'id' : new_member['id'], 'name' : new_member['name'], 'email' : new_member['email'], 'level' : new_member['level']}})
 
 # TODO 
 @app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])
