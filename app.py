@@ -1,6 +1,5 @@
 from flask import Flask, g, request, jsonify, render_template
 from database import get_db
-import os
 
 app = Flask(__name__)
 
