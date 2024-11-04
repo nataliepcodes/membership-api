@@ -33,10 +33,13 @@ def get_members():
     return jsonify({'members' : member_values}) # returns json object
 
 
-# TODO 
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member(member_id):
-    return '<h1>This route returns one member</h1>'
+    db = get_db()
+    member_cur = db.execute('SELECT id, name, email, level FROM members WHERE id = ?', [member_id])
+    member = member_cur.fetchone()
+
+    return jsonify({'member' : {'id' : member['id'], 'name' : member['name'], 'email' : member['email'], 'level' : member['level']}})
 
 
 # Adds member to the database
@@ -62,6 +65,7 @@ def add_member():
     
     # Building a json object
     return jsonify({'member' : {'id' : new_member['id'], 'name' : new_member['name'], 'email' : new_member['email'], 'level' : new_member['level']}})
+
 
 # TODO 
 @app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])
