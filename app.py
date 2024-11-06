@@ -81,6 +81,7 @@ def edit_member(member_id):
     # Adding updated data to db
     db = get_db()
     db.execute('UPDATE members SET name = ?, email = ?, level = ? WHERE id = ?', [name, email, level, member_id])
+    db.commit()
 
     # Querying updated data from the db
     member_cur = db.execute('SELECT id, name, email, level FROM members WHERE id = ?', [member_id])
