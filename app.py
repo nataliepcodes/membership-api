@@ -69,7 +69,7 @@ def add_member():
 
 
 # Updates member data
-@app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])
+@app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])  # PATCH is for partial update of resource, PUT is for full update/all fields
 def edit_member(member_id):
     new_member_info = request.get_json()
 
