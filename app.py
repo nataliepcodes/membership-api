@@ -1,4 +1,4 @@
-from flask import Flask, g, request, jsonify, render_template
+from flask import Flask, g, request, jsonify
 from database import get_db
 
 app = Flask(__name__)
