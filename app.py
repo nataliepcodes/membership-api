@@ -91,10 +91,14 @@ def edit_member(member_id):
     return jsonify({'member' : {'id' : updated_member['id'], 'name' : updated_member['name'], 'email' : updated_member['email'], 'level' : updated_member['level']}})
 
 
-# TODO 
+# Delete member from the db
 @app.route('/member/<int:member_id>', methods=['DELETE'])
 def delete_member(member_id):
-    return '<h1>This route removes member by ID</h1>'
+    db = get_db()
+    db.execute('DELETE FROM members WHERE id = ?', [member_id])
+    db.commit()
+
+    return jsonify({'message' : 'The member has been deleted.'})
 
 
 if __name__ == '__main__':
