@@ -68,10 +68,26 @@ def add_member():
     return jsonify({'member' : {'id' : new_member['id'], 'name' : new_member['name'], 'email' : new_member['email'], 'level' : new_member['level']}})
 
 
-# TODO 
+# Updates member data
 @app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])
 def edit_member(member_id):
-    return '<h1>This route updates a member by ID</h1>'
+    new_member_info = request.get_json()
+
+    # Updating data
+    name = new_member_info['name']
+    email = new_member_info['email']
+    level = new_member_info['level']
+
+    # Adding updated data to db
+    db = get_db()
+    db.execute('UPDATE members set name = ?, email = ?, level = ? WHERE id = ?', [name, email, level, member_id])
+
+    # Querying updated data from the db
+    member_cur = db.execute('SELECT id, name, email, level FROM members WHERE id = ?', [member_id])
+    updated_member = member_cur.fetchone()
+
+    # Return json object, list of dictionaries
+    return jsonify({'member' : {'id' : updated_member['id'], 'name' : updated_member['name'], 'email' : updated_member['email'], 'level' : updated_member['level']}})
 
 
 # TODO 
