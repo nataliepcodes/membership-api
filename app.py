@@ -43,7 +43,7 @@ def get_members():
         # Return: json object, list of dictionaries
         return jsonify({'members' : member_values, 'username' : username, 'password' : password}) 
 
-    return jsonify({'error' : 'Authentification failed.'})
+    return jsonify({'error' : 'Authentification failed.'}), 401  # Goal: 200 OK in GREEN
 
 
 # Returns one member by id
