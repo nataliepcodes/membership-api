@@ -8,3 +8,6 @@ For Postman testing:
     "level" : "Gold"
 }
 4. Send
+
+## Authentification ##
+- in Postman/ Authorisation tab/ Basic Authentification
