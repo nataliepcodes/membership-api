@@ -13,3 +13,11 @@
 - in Postman/ Authorization tab/ Auth Type / Basic Auth
 - set username and password for testing
 - update GET member route to check if password and username are correct
+
+## Python Anywhere ##
+- create account
+- to install Python env (PA console): $ mkvirtualenv --python=/usr/bin/python3.x env  <- x is the applicable version
+- to install Flask (PA console): $ pip install Flask
+- create repository on Github
+- clone code from GitHub to Python Anywhere: $ git clone <GHrepository>
+- go to the WEB tab to create the app / add new web app / manual config / select Python version
