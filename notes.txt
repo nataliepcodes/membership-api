@@ -1,4 +1,4 @@
-For Postman testing:
+## Postman testing example ##
 1. POST 
 2. go to Body, select raw
 3. select JSON
@@ -10,4 +10,6 @@ For Postman testing:
 4. Send
 
 ## Authentification ##
-- in Postman/ Authorisation tab/ Basic Authentification
+- in Postman/ Authorization tab/ Auth Type / Basic Auth
+- set username and password for testing
+- update GET member route to check if password and username are correct
