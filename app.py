@@ -15,11 +15,11 @@ def protected(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         auth = request.authorization
-        if auth and auth.name == api_username and auth.password == api_password:
+        if auth and auth.username == api_username and auth.password == api_password:
             return f(*args, **kwargs)
         else:
-            # It is not 400 BAD REQUEST. It is 403 FORBIDDEN client error response status code indicating that the server UNDERSTOOD the request BUT REFUSED to process it
-            return jsonify({'error' : 'Authentification failed.'}), 403  # Goal: 200 OK in GREEN or SERVERLESS?
+            return jsonify({'error' : 'Authentification failed.'}), 403  # Goal: 200 OK in GREEN
+        
     return decorated
 
 
@@ -31,6 +31,7 @@ def close_db(error):
 
 # Returns all members from the database including their information
 @app.route('/member', methods=['GET'])
+@protected
 def get_members():
     db = get_db()
     member_cur = db.execute('SELECT * FROM members')
