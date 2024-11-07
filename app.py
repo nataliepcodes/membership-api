@@ -28,9 +28,13 @@ def get_members():
         dictionary['level'] = member['level']
 
         member_values.append(dictionary)
+    
+    # Get authentification values for username anf password
+    username = request.authorization.username
+    password = request.authorization.password
 
     # Return: json object, list of dictionaries
-    return jsonify({'members' : member_values}) 
+    return jsonify({'members' : member_values, 'username' : username, 'password' : password}) 
 
 
 # Returns one member by id
