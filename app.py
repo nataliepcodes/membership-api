@@ -1,12 +1,12 @@
 from flask import Flask, g, request, jsonify
 from database import get_db
+import os
 
 app = Flask(__name__)
 
-# Hardcoding the auth - bad practice(!!!) - adding for learning purposes, as per course
-# TODO update and move to .env file
-api_username = 'admin'
-api_password = 'notasecretpassword'
+# API authentification
+api_username = os.getenv('USERNAME')
+api_password = os.getenv('PASSWORD')
 
 
 @app.teardown_appcontext
@@ -35,12 +35,15 @@ def get_members():
 
         member_values.append(dictionary)
     
-    # Get authentification values for username anf password
+    # Get authentification values for username and password
     username = request.authorization.username
     password = request.authorization.password
 
-    # Return: json object, list of dictionaries
-    return jsonify({'members' : member_values, 'username' : username, 'password' : password}) 
+    if username == api_username and password == api_password:
+        # Return: json object, list of dictionaries
+        return jsonify({'members' : member_values, 'username' : username, 'password' : password}) 
+
+    return jsonify({'error' : 'Authentification failed.'})
 
 
 # Returns one member by id
