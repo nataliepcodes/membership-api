@@ -3,6 +3,12 @@ from database import get_db
 
 app = Flask(__name__)
 
+# Hardcoding the auth - bad practice(!!!) - adding for learning purposes, as per course
+# TODO update and move to .env file
+api_username = 'admin'
+api_password = 'notasecretpassword'
+
+
 @app.teardown_appcontext
 def close_db(error):
     if hasattr(g, 'sqlite_db'):
