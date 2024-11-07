@@ -18,8 +18,10 @@ def protected(f):
         if auth and auth.name == api_username and auth.password == api_password:
             return f(*args, **kwargs)
         else:
-            return jsonify({'error' : 'Authentification failed.'}), 403 
+            # It is not 400 BAD REQUEST. It is 403 FORBIDDEN client error response status code indicating that the server UNDERSTOOD the request BUT REFUSED to process it
+            return jsonify({'error' : 'Authentification failed.'}), 403  # Goal: 200 OK in GREEN
     return decorated
+
 
 @app.teardown_appcontext
 def close_db(error):
@@ -47,16 +49,7 @@ def get_members():
 
         member_values.append(dictionary)
     
-    # Get authentification values for username and password
-    username = request.authorization.username
-    password = request.authorization.password
-
-    if username == api_username and password == api_password:
-        # Return: json object, list of dictionaries
-        return jsonify({'members' : member_values, 'username' : username, 'password' : password}) 
-
-    # 403 Forbidden client error response status code indicates that the server understood the request but refused to process it
-    return jsonify({'error' : 'Authentification failed.'}), 403  # Goal: 200 OK in GREEN
+    return jsonify({'members' : member_values}) 
 
 
 # Returns one member by id
