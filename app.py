@@ -10,6 +10,7 @@ app = Flask(__name__)
 api_username = os.getenv('USERNAME')
 api_password = os.getenv('PASSWORD')
 
+
 # Authentification decorator function 
 def protected(f):
     @wraps(f)
@@ -55,6 +56,7 @@ def get_members():
 
 # Returns one member by id
 @app.route('/member/<int:member_id>', methods=['GET'])
+@protected
 def get_member(member_id):
 
     # Process: get one member information from db by member id
@@ -68,6 +70,7 @@ def get_member(member_id):
 
 # Adds member to the database
 @app.route('/member', methods=['POST'])
+@protected
 def add_member():
     new_member_info = request.get_json() # gets data from Postman
 
@@ -90,6 +93,7 @@ def add_member():
 
 # Updates member data
 @app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])  # PATCH is for partial update of resource, PUT is for full update/all fields
+@protected
 def edit_member(member_id):
     new_member_info = request.get_json()
 
@@ -113,6 +117,7 @@ def edit_member(member_id):
 
 # Delete member from the db
 @app.route('/member/<int:member_id>', methods=['DELETE'])
+@protected
 def delete_member(member_id):
     db = get_db()
     db.execute('DELETE FROM members WHERE id = ?', [member_id])
