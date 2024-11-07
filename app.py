@@ -1,6 +1,8 @@
 from flask import Flask, g, request, jsonify
 from database import get_db
+from functools import wraps
 import os
+
 
 app = Flask(__name__)
 
@@ -8,6 +10,16 @@ app = Flask(__name__)
 api_username = os.getenv('USERNAME')
 api_password = os.getenv('PASSWORD')
 
+# Authentification decorator function 
+def protected(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if auth and auth.name == api_username and auth.password == api_password:
+            return f(*args, **kwargs)
+        else:
+            return jsonify({'error' : 'Authentification failed.'}), 403 
+    return decorated
 
 @app.teardown_appcontext
 def close_db(error):
