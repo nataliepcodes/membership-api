@@ -20,4 +20,10 @@
 - to install Flask (PA console): $ pip install Flask
 - create repository on Github
 - clone code from GitHub to Python Anywhere: $ git clone <GHrepository>
-- go to the WEB tab to create the app / add new web app / manual config / select Python version
+- go to the WEB tab to create the app -> add new web app -> manual config -> select Python version
+- Virtualenv -> enter env 
+- Code -> WSGI config file -> remove Hello world code and application function -> comment out 'import sys' and 'path' code
+-> change 'path' name within the URL of path variable to the name of the repository
+- uncomment 'from main flask app' and rename to 'app' -> Save
+- update db path in database.py from local path to db location in Python Anywhere
+- to test API in Postman, change URL from local location to Python Anywhere URL
