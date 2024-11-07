@@ -19,7 +19,7 @@ def protected(f):
             return f(*args, **kwargs)
         else:
             # It is not 400 BAD REQUEST. It is 403 FORBIDDEN client error response status code indicating that the server UNDERSTOOD the request BUT REFUSED to process it
-            return jsonify({'error' : 'Authentification failed.'}), 403  # Goal: 200 OK in GREEN
+            return jsonify({'error' : 'Authentification failed.'}), 403  # Goal: 200 OK in GREEN or SERVERLESS?
     return decorated
 
 
