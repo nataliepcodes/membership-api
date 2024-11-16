@@ -31,7 +31,12 @@ def close_db(error):
 
 
 # Returns all members from the database including their information
-@app.route('/member', methods=['GET'])
+# TODO: You usually return a paginated list. Imagine your DB has 10_000 members, and you try to send them all back to the client...
+# It will take a long time to send it and the client most likely will not need all of them.
+# You could also use LIMIT in your query, where the number comes from the client.
+# EX.: Client sends 10, the query becomes SELECT * FROM members LIMIT 10
+# The idea is to never send your whole DB to the client. Send chunks of data via paginated list and let the client decide if he wants more or not.
+@app.route('/members', methods=['GET'])
 @protected
 def get_members():
     db = get_db()
@@ -55,7 +60,9 @@ def get_members():
 
 
 # Returns one member by id
-@app.route('/member/<int:member_id>', methods=['GET'])
+# TODO: What happens if I send an invalid member_id like -1, -2, -1200?
+# What happens if I send a valid member_id that doesn't exist in the DB like 99999999?
+@app.route('/members/<int:member_id>', methods=['GET'])
 @protected
 def get_member(member_id):
 
@@ -69,7 +76,11 @@ def get_member(member_id):
 
 
 # Adds member to the database
-@app.route('/member', methods=['POST'])
+# TODO: Looking at the schema.sql I noticed that only the id is UNIQUE (via PRIMARY KEY).
+# What happens if I save 10 members that have the same name, email and level?
+# You'll end up with 10 members with 10 different ids. I suggest you make the email UNIQUE
+# This is for later: What happens if I send an empty string "" or a blank string "    "? You will want some validation for each endpoint.
+@app.route('/members', methods=['POST'])
 @protected
 def add_member():
     new_member_info = request.get_json() # gets data from Postman
@@ -92,7 +103,8 @@ def add_member():
 
 
 # Updates member data
-@app.route('/member/<int:member_id>', methods=['PUT', 'PATCH'])  # PATCH is for partial update of resource, PUT is for full update/all fields
+# TODO: What happens if the member_id is not present in the DB?
+@app.route('/members/<int:member_id>', methods=['PUT', 'PATCH'])  # PATCH is for partial update of resource, PUT is for full update/all fields
 @protected
 def edit_member(member_id):
     new_member_info = request.get_json()
@@ -116,7 +128,8 @@ def edit_member(member_id):
 
 
 # Delete member from the db
-@app.route('/member/<int:member_id>', methods=['DELETE'])
+# TODO: What happens if the member_id is not present in the DB?
+@app.route('/members/<int:member_id>', methods=['DELETE'])
 @protected
 def delete_member(member_id):
     db = get_db()
